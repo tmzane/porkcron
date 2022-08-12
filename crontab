@@ -1,0 +1,3 @@
+# add @reboot to run the script on container startup
+@reboot /usr/local/bin/python /app/script.py
+@weekly /usr/local/bin/python /app/script.py
