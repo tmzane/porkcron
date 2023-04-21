@@ -1,0 +1,19 @@
+[tool.mypy]
+strict = true
+pretty = true
+
+[tool.black]
+check = true
+diff = true
+color = true
+line-length = 120
+
+[tool.ruff]
+select = [
+    "F",  # pyflakes
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "I",  # isort
+    "UP", # pyupgrade
+]
+line-length = 120
