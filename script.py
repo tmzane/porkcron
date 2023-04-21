@@ -11,15 +11,16 @@ DEFAULT_API_URL = "https://porkbun.com/api/json/v3"
 DEFAULT_CERTIFICATE_PATH = "/ssl/fullchain.pem"
 DEFAULT_PRIVATE_KEY_PATH = "/ssl/privkey.pem"
 
+LOG_FORMAT = "%(asctime)s [%(levelname)s] %(message)s"
 
-def main():
-    LOG_FORMAT = "%(asctime)s [%(levelname)s] %(message)s"
+
+def main() -> None:
     logging.basicConfig(stream=sys.stdout, level=logging.INFO, format=LOG_FORMAT)
     logging.info("running SSL certificate renewal script")
 
-    domain = mustenv("DOMAIN")
-    api_key = mustenv("API_KEY")
-    secret_key = mustenv("SECRET_KEY")
+    domain = getenv_or_exit("DOMAIN")
+    api_key = getenv_or_exit("API_KEY")
+    secret_key = getenv_or_exit("SECRET_KEY")
 
     logging.info(f"downloading SSL bundle for {domain}")
     url = os.getenv("API_URL", DEFAULT_API_URL) + "/ssl/retrieve/" + domain
@@ -27,7 +28,8 @@ def main():
 
     data = r.json()
     if data["status"] == "ERROR":
-        exit(data["message"])
+        logging.error(data["message"])
+        sys.exit(1)
 
     certificate_path = os.getenv("CERTIFICATE_PATH", DEFAULT_CERTIFICATE_PATH)
     logging.info(f"saving certificate to {certificate_path}")
@@ -42,15 +44,12 @@ def main():
     logging.info("SSL certificate has been successfully renewed")
 
 
-def mustenv(key: str) -> str:
+def getenv_or_exit(key: str) -> str:
     value = os.getenv(key)
-    if value is None:
-        exit(f"{key} is not set")
-    return value
+    if value is not None:
+        return value
 
-
-def exit(msg: str):
-    logging.error(msg)
+    logging.error(f"{key} is required but not set")
     sys.exit(1)
 
 
