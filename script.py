@@ -1,32 +1,34 @@
 #!/usr/bin/env python3
 
+import json
 import logging
 import os
 import sys
-
-import requests
+from urllib import request
 
 # https://porkbun.com/api/json/v3/documentation
 DEFAULT_API_URL = "https://porkbun.com/api/json/v3"
 DEFAULT_CERTIFICATE_PATH = "/ssl/fullchain.pem"
 DEFAULT_PRIVATE_KEY_PATH = "/ssl/privkey.pem"
 
-LOG_FORMAT = "%(asctime)s [%(levelname)s] %(message)s"
-
 
 def main() -> None:
-    logging.basicConfig(stream=sys.stdout, level=logging.INFO, format=LOG_FORMAT)
+    logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
     logging.info("running SSL certificate renewal script")
 
     domain = getenv_or_exit("DOMAIN")
     api_key = getenv_or_exit("API_KEY")
     secret_key = getenv_or_exit("SECRET_KEY")
 
-    logging.info(f"downloading SSL bundle for {domain}")
     url = os.getenv("API_URL", DEFAULT_API_URL) + "/ssl/retrieve/" + domain
-    r = requests.post(url, json={"apikey": api_key, "secretapikey": secret_key})
+    body = json.dumps({"apikey": api_key, "secretapikey": secret_key}).encode()
+    headers = {"Content-Type": "application/json"}
 
-    data = r.json()
+    logging.info(f"downloading SSL bundle for {domain}")
+    req = request.Request(url, data=body, headers=headers, method="POST")
+    with request.urlopen(req) as resp:
+        data = json.load(resp)
+
     if data["status"] == "ERROR":
         logging.error(data["message"])
         sys.exit(1)
