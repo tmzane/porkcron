@@ -1,0 +1,10 @@
+[Unit]
+Description=Run porkcron
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/porkcron
+EnvironmentFile=/etc/porkcron/.env
+ExecStartPost=/usr/bin/systemctl reload nginx.service

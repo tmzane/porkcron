@@ -2,7 +2,7 @@
 
 ME=$(basename $0)
 
-while [ ! -e /ssl/fullchain.pem ] || [ ! -e /ssl/privkey.pem ]; do
+while [ ! -e /etc/porkcron/certificate.pem ] || [ ! -e /etc/porkcron/private_key.pem ]; do
 	echo "$ME: waiting for SSL bundle"
 	sleep 1
 done

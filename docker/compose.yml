@@ -2,18 +2,18 @@ services:
   porkcron:
     build: .
     container_name: porkcron
-    env_file: .env
+    env_file: ../.env
     volumes:
-      - ssl:/ssl
+      - ssl:/etc/porkcron
 
   # nginx:
-  #   build: nginx
+  #   build: ../nginx
   #   container_name: nginx
   #   ports:
   #     - 80:80
   #     - 443:443
   #   volumes:
-  #     - ssl:/ssl/:ro
+  #     - ssl:/etc/porkcron:ro
   #   depends_on:
   #     - porkcron
 

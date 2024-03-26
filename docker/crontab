@@ -1,0 +1,3 @@
+# run on container startup
+@reboot /usr/local/bin/porkcron
+@weekly /usr/local/bin/porkcron

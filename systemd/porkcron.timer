@@ -1,0 +1,9 @@
+[Unit]
+Description=Run porkcron weekly
+
+[Timer]
+OnCalendar=Weekly
+Persistent=true
+
+[Install]
+WantedBy=timers.target
