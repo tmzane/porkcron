@@ -13,7 +13,7 @@ cp porkcron.timer /etc/systemd/system/
 cp porkcron.service /etc/systemd/system/
 
 mkdir -p /etc/porkcron
-mv ../.env /etc/porkcron/
+cp ../.env /etc/porkcron/
 
 systemctl daemon-reload
 systemctl enable porkcron.timer

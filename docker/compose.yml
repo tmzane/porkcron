@@ -6,6 +6,7 @@ services:
     volumes:
       - ssl:/etc/porkcron
 
+  # uncomment if you're running nginx:
   # nginx:
   #   build: ../nginx
   #   container_name: nginx

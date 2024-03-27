@@ -7,4 +7,5 @@ Wants=network-online.target
 Type=oneshot
 ExecStart=/usr/local/bin/porkcron
 EnvironmentFile=/etc/porkcron/.env
-ExecStartPost=/usr/bin/systemctl reload nginx.service
+# uncomment if you're running nginx:
+# ExecStartPost=/usr/bin/systemctl reload nginx.service
