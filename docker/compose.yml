@@ -11,7 +11,6 @@ services:
   #   build: ../nginx
   #   container_name: nginx
   #   ports:
-  #     - 80:80
   #     - 443:443
   #   volumes:
   #     - ssl:/etc/porkcron:ro
