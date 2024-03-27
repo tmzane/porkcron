@@ -2,18 +2,15 @@
 strict = true
 pretty = true
 
-[tool.black]
-check = true
-diff = true
-color = true
-line-length = 120
-
 [tool.ruff]
+line-length = 999
+
+[tool.ruff.lint]
 select = [
     "F",  # pyflakes
     "E",  # pycodestyle errors
     "W",  # pycodestyle warnings
     "I",  # isort
+    "N",  # pep8-naming
     "UP", # pyupgrade
 ]
-line-length = 120
