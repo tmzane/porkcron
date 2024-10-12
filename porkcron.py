@@ -7,7 +7,7 @@ import sys
 from urllib import request
 
 # https://porkbun.com/api/json/v3/documentation
-DEFAULT_API_URL = "https://porkbun.com/api/json/v3"
+DEFAULT_API_URL = "https://api.porkbun.com/api/json/v3"
 DEFAULT_CERTIFICATE_PATH = "/etc/porkcron/certificate.crt"
 DEFAULT_PRIVATE_KEY_PATH = "/etc/porkcron/private_key.key"
 
