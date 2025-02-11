@@ -5,10 +5,8 @@ Automatically renew SSL certificate for your Porkbun domain.
 ## 📌 About
 
 `porkcron` is a simple alternative to [certbot][1].
-If you own a domain registered by [Porkbun][2],
-they offer you a [free SSL certificate][3] issued by [Let's Encrypt][4].
-So instead of getting it from scratch yourself,
-you can periodically download the certificate using the [Porkbun API][5].
+If you own a domain registered by [Porkbun][2], they offer you a [free SSL certificate][3] issued by [Let's Encrypt][4].
+So instead of getting it from scratch yourself, you can periodically download the certificate using the [Porkbun API][5].
 `porkcron` is designed to automate this process.
 It can be run as a [systemd timer][6] or in a Docker container.
 
@@ -27,16 +25,24 @@ Take a look at the `.env.example` file.
 It contains all the environment variables used by `porkcron`.
 Rename it to `.env` and fill it with the values you got earlier.
 
-| Name             | Description                         | Required | Default                             |
-|------------------|-------------------------------------|:--------:|-------------------------------------|
-| DOMAIN           | your Porkbun domain                 | yes      | -                                   |
-| API_KEY          | your Porkbun API key                | yes      | -                                   |
-| SECRET_KEY       | your Porkbun API secret key         | yes      | -                                   |
-| API_URL          | the Porkbun API address             | no       | https://api.porkbun.com/api/json/v3 |
-| CERTIFICATE_PATH | the path to save the certificate to | no       | /etc/porkcron/certificate.pem       |
-| PRIVATE_KEY_PATH | the path to save the private key to | no       | /etc/porkcron/private_key.pem       |
+| Name             | Description                         | Required | Default                                |
+|------------------|-------------------------------------|:--------:|----------------------------------------|
+| DOMAIN           | your Porkbun domain(s)              | yes      | -                                      |
+| API_KEY          | your Porkbun API key                | yes      | -                                      |
+| SECRET_KEY       | your Porkbun API secret key         | yes      | -                                      |
+| API_URL          | the Porkbun API address             | no       | https://api.porkbun.com/api/json/v3    |
+| CERTIFICATE_PATH | the path to save the certificate to | no       | /etc/porkcron/{domain}/certificate.pem |
+| PRIVATE_KEY_PATH | the path to save the private key to | no       | /etc/porkcron/{domain}/private_key.pem |
 
-Now you need to choose the installation method.
+Note the `{domain}` placeholder in the paths.
+It will be automatically replaced with your domain.
+You can use the placeholder in non-default paths as well.
+
+`porkcron` can also work with multiple domains at once.
+You can set `DOMAIN` to a comma-separated list of domains.
+In this case, both `CERTIFICATE_PATH` and `PRIVATE_KEY_PATH` must contain the `{domain}` placeholder.
+
+Once you have filled in all the values, you can proceed to choosing the installation method.
 
 ### Using systemd
 
